@@ -6,7 +6,6 @@ from typing import List
 
 import ethdasm.opcodes as oc
 
-
 class Instruction:
     instruction: oc.OpCode
     address: int
@@ -109,12 +108,12 @@ class Parser:
         return instructions
 
     @staticmethod
-    def parse(contract_code: str) -> [Block]:
+    def parse(contract_code: str, args) -> [Block]:
         """
         Parses contract code into a list of blocks.
         """
         opcodes = Parser.__parse_ops(contract_code)
-        optimized_opcodes = Parser.__optimize(opcodes)
+        optimized_opcodes = Parser.__optimize(opcodes) if not args.no_opt else opcodes
         blocks = Parser.__parse_blocks(optimized_opcodes)
         return blocks
 
